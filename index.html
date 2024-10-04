@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nguyễn Thị Kim Vy</title>
+    <style>
+      body,
+      footer {
+        background-color: #f2e6d3;
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 36px;
+        color: #8c4a39;
+        margin-top: 50px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 20px;
+        padding: 20px;
+      }
+
+      .photo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        border: 5px solid #8c4a39;
+        box-shadow: 0 0 10px #8c4a39;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .photo:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #8c4a39;
+      }
+
+      .photo img {
+        width: 100%;
+        height: auto;
+      }
+
+      .photo .caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 5px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        font-size: 14px;
+        text-align: left;
+      }
+      @media screen and (max-width: 767px) {
+        .container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media screen and (max-width: 479px) {
+        .container {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Mảnh ghép kí ức</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+      <input type="file" name="file" id="file" />
+      <input type="submit" value="Upload" />
+    </form>
+
+    <div id="imagePreview"></div>
+    <div class="container">
+      <div class="photo">
+        <img src="./img/1.jpg" alt="Ảnh 1" />
+        <!-- <div class="caption">Thời gian: 29_1_2023</div> -->
+      </div>
+      <div class="photo">
+        <img src="./img/2.jpg" alt="Ảnh 2" />
+        <!-- <div class="caption">Thời gian: 26_1_2023</div> -->
+      </div>
+      <div class="photo">
+        <img src="./img/3.jpg" alt="Ảnh 3" />
+        <!-- <div class="caption">Thời gian: 6_2_2022</div> -->
+      </div>
+      <div class="photo">
+        <img src="./img/4.jpg" alt="Ảnh 4" />
+      </div>
+      <div class="photo">
+        <img src="./img/5.jpg" alt="Ảnh 5" />
+      </div>
+      <div class="photo">
+        <img src="./img/6.jpg" alt="Ảnh 6" />
+      </div>
+    </div>
+    <!-- Thêm nhiều ảnh khác nếu cần -->
+    <footer>@Bản quyền thuộc về Ht . Ngày lập : 5-10-2024</footer>
+    <script>
+      $(document).ready(function () {
+        $("#uploadForm").on("submit", function (e) {
+          e.preventDefault();
+
+          var formData = new FormData(this);
+
+          $.ajax({
+            url: "upload.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              $("#imagePreview").html(
+                '<img src="img/' + data + '" alt="Uploaded Image" width="300">'
+              );
+            },
+            error: function () {
+              alert("Lỗi khi upload file.");
+            },
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
